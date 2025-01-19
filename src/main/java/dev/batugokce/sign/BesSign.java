@@ -2,6 +2,7 @@ package dev.batugokce.sign;
 
 import dev.batugokce.base.CadesSampleBase;
 import dev.batugokce.smartcardmanager.SmartCardManager;
+import dev.batugokce.util.ConsoleUtil;
 import tr.gov.tubitak.uekae.esya.api.asn.x509.ECertificate;
 import tr.gov.tubitak.uekae.esya.api.cmssignature.CMSSignatureException;
 import tr.gov.tubitak.uekae.esya.api.cmssignature.ISignable;
@@ -32,7 +33,7 @@ public class BesSign extends CadesSampleBase {
         HashMap<String, Object> params = createParameters();
 
         ECertificate cert = SmartCardManager.getInstance().getSignatureCertificate(IS_QUALIFIED);
-        BaseSigner signer = SmartCardManager.getInstance().getSigner(getPin(), cert);
+        BaseSigner signer = SmartCardManager.getInstance().getSigner(ConsoleUtil.getPin(), cert);
 
         baseSignedData.addSigner(ESignatureType.TYPE_BES, cert, signer, null, params);
 

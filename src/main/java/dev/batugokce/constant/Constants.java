@@ -8,6 +8,7 @@ public final class Constants {
     public static final String SMART_CARD_PIN = "";
 
     public static String ROOT_DIR = "C:/ma3api-java-bundle";
+    public static final String IMZALANACAK_ICERIK_DEFAULT_PATH = "";
 
     // gets only qualified certificates in smart card
     public static final boolean IS_QUALIFIED = true;
