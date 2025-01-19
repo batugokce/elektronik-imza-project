@@ -1,0 +1,158 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>dev.batugokce</groupId>
+  <artifactId>elektronik-imza-project</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+  <name>elektronik-imza-project</name>
+
+  <developers>
+    <developer>
+      <id>batugokce</id>
+      <name>Batuhan Gokce</name>
+      <email>batugokce1998@gmail.com</email>
+      <roles>
+        <role>Student</role>
+        <role>Developer</role>
+      </roles>
+    </developer>
+  </developers>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <ma3api.version>2.3.11.3</ma3api.version>
+  </properties>
+
+  <dependencies>
+
+    <dependency>
+      <groupId>tr.gov.tubitak.uekae.esya.api</groupId>
+      <artifactId>ma3api-asn</artifactId>
+      <version>${ma3api.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>tr.gov.tubitak.uekae.esya.api</groupId>
+      <artifactId>ma3api-certstore</artifactId>
+      <version>${ma3api.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>tr.gov.tubitak.uekae.esya.api</groupId>
+      <artifactId>ma3api-certvalidation</artifactId>
+      <version>${ma3api.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>tr.gov.tubitak.uekae.esya.api</groupId>
+      <artifactId>ma3api-cmssignature</artifactId>
+      <version>${ma3api.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>tr.gov.tubitak.uekae.esya.api</groupId>
+      <artifactId>ma3api-common</artifactId>
+      <version>${ma3api.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>tr.gov.tubitak.uekae.esya.api</groupId>
+      <artifactId>ma3api-crypto</artifactId>
+      <version>${ma3api.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>tr.gov.tubitak.uekae.esya.api</groupId>
+      <artifactId>ma3api-crypto-gnuprovider</artifactId>
+      <version>${ma3api.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>tr.gov.tubitak.uekae.esya.api</groupId>
+      <artifactId>ma3api-xmlsignature</artifactId>
+      <version>${ma3api.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>tr.gov.tubitak.uekae.esya.api</groupId>
+      <artifactId>ma3api-infra</artifactId>
+      <version>${ma3api.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>tr.gov.tubitak.uekae.esya.api</groupId>
+      <artifactId>ma3api-signature</artifactId>
+      <version>${ma3api.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>tr.gov.tubitak.uekae.esya.api</groupId>
+      <artifactId>ma3api-smartcard</artifactId>
+      <version>${ma3api.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-logging</groupId>
+      <artifactId>commons-logging</artifactId>
+      <version>1.1.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>1.7.36</version>
+    </dependency>
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <version>1.2.11</version>
+    </dependency>
+
+    <dependency>
+      <groupId>jcifs</groupId>
+      <artifactId>jcifs</artifactId>
+      <version>1.3.1</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>tubitak</groupId>
+      <artifactId>akiscif</artifactId>
+      <version>3.3.18</version>
+    </dependency>
+    <dependency>
+      <groupId>com.objsys</groupId>
+      <artifactId>asn1rt</artifactId>
+      <version>6.6.4</version>
+    </dependency>
+
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <finalName>eimza-app</finalName>
+
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+            <configuration>
+              <archive>
+                <manifest>
+                  <mainClass>
+                    dev.batugokce.App
+                  </mainClass>
+                </manifest>
+              </archive>
+              <descriptorRefs>
+                <descriptorRef>jar-with-dependencies</descriptorRef>
+              </descriptorRefs>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>
