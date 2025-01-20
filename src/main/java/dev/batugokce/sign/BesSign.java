@@ -1,8 +1,8 @@
 package dev.batugokce.sign;
 
+import dev.batugokce.ImzaSonucu;
 import dev.batugokce.base.CadesSampleBase;
 import dev.batugokce.smartcardmanager.SmartCardManager;
-import dev.batugokce.util.ConsoleUtil;
 import tr.gov.tubitak.uekae.esya.api.asn.x509.ECertificate;
 import tr.gov.tubitak.uekae.esya.api.cmssignature.CMSSignatureException;
 import tr.gov.tubitak.uekae.esya.api.cmssignature.ISignable;
@@ -15,6 +15,7 @@ import tr.gov.tubitak.uekae.esya.api.common.util.Base64;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.UUID;
@@ -24,7 +25,7 @@ import static dev.batugokce.constant.Constants.IS_QUALIFIED;
 
 public class BesSign extends CadesSampleBase {
 
-    public void signCadesBes(String filepathToSign) throws Exception {
+    public ImzaSonucu signCadesBes(String filepathToSign, String pin) throws Exception {
         byte[] imzalanacakIcerik = Files.readAllBytes(Paths.get(filepathToSign));
         BaseSignedData baseSignedData = new BaseSignedData();
         ISignable content = new SignableByteArray(imzalanacakIcerik);
@@ -33,7 +34,8 @@ public class BesSign extends CadesSampleBase {
         HashMap<String, Object> params = createParameters();
 
         ECertificate cert = SmartCardManager.getInstance().getSignatureCertificate(IS_QUALIFIED);
-        BaseSigner signer = SmartCardManager.getInstance().getSigner(ConsoleUtil.getPin(), cert);
+        BaseSigner signer = SmartCardManager.getInstance().getSigner(pin, cert);
+        String imzaciBilgileri = cert.getSubject().getCommonNameAttribute() + " - " + cert.getSubject().getSerialNumberAttribute();
 
         baseSignedData.addSigner(ESignatureType.TYPE_BES, cert, signer, null, params);
 
@@ -43,9 +45,10 @@ public class BesSign extends CadesSampleBase {
         byte[] imzaliVeri = attachExternalContent(imzaVerisi, imzalanacakIcerik);
 
         String outputFilePath = "".concat(String.format("./BES-%s.txt", UUID.randomUUID()));
-        Files.write(Paths.get(outputFilePath), Base64.encode(imzaliVeri).getBytes(StandardCharsets.UTF_8));
+        Path path = Files.write(Paths.get(outputFilePath), Base64.encode(imzaliVeri).getBytes(StandardCharsets.UTF_8));
 
         LOGGER.info("İmzalama işlemi tamamlandı. İmza dosyası şu konumda oluşturuldu: {}", outputFilePath);
+        return ImzaSonucu.builder().imzaliVeriDosyaYolu(path.toAbsolutePath().toString()).imzaciAdSoyad(imzaciBilgileri).build();
     }
 
     private HashMap<String, Object> createParameters() {
